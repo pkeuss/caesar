@@ -97,11 +97,11 @@ class MainHandler(webapp2.RequestHandler):
     def post(self):
         user_rot = self.request.get('rot')
         user_text = self.request.get('text')
-
+        escaped_text = cgi.escape(user_text, quote = True)
         validCheck = user_input_is_valid(user_rot)
 
         if validCheck:
-            new_text = encrypt(user_text, user_rot)
+            new_text = encrypt(escaped_text, user_rot)
             self.write_form("", user_rot, new_text)
 
         else:
